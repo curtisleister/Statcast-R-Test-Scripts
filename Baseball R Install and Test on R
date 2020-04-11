@@ -1,0 +1,29 @@
+Library(devtools)
+Install_github(“BillPetti/baseballr”)
+##For now, make sure running R version 3.6.2 or earlier, and the newest version of RStudio. Seems to work well on PC, may need to ensure OS version is up to date on a MAC 
+##Create dataframes for individual chunks of statcast data, duplicate the below 
+week12019 = baseballr::scrape_statcast_savant(start_date = '2019-03-28', end_date = '2019-04-07', player_type = 'batter')
+##Combine dataframes into one dataframe with an rbind command
+SavantData = rbind(week12019, week22019, week32019, week42019…..)
+##Create an observation dataframe to sample the number of rows/types of rows in the dataframe (similar to a SQL describe extended or describe statement) 
+savantobvs = savantdata[sample(nrow(savantdata),10),]
+##Also documentation on baseball savant in a CSV file to find column descriptions
+##Add to a DB
+Install RSQLite -> install.packages(‘RSQLite’), library(RSQLite)
+Install DBI -> install.packages(‘DBI’), library(DBI)
+##Create DB Connection 
+db = dbConnect(SQLite(), dbname = "Statcast.sqlite")
+##Write Table to data
+dbWriteTable(conn = db, name = "Statcast_Hitting", savantdata, overwrite =T, row.names = F)
+##Test with a SQL query in R to see if table has data with dbGetQuery statement through GBI 
+dbGetQuery(conn = db, "SELECT * FROM Statcast_Hitting LIMIT 50")
+##OR do through dPLYR
+savantdata2 = dbGetQuery(conn = db, "SELECT * FROM Statcast_Hitting")
+##savantdata2 %>% slice(1:50) (to select top 50 entries)
+##Analysis Example -> Home Runs and average EV vs. FBs over 95 mph 
+savantdata2 %>% 
++ select(player_name, events, launch_speed, release_speed) %>%
++ filter(events == "home_run", release_speed >= 95) %>%
++ group_by(player_name) %>%
++ summarise(HR = n(), AvgEV = mean(launch_speed)) %>%
++ arrange(desc(HR))
