@@ -1,0 +1,22 @@
+## Load baseballR, tidyverse and stringr
+library(stringr)
+library(baseballr)
+library(tidyverse)
+
+##Lookup School ID, University Illinois-Chicago Example
+school_id_lu(school_name = "UIC")
+
+## Get Schedule Info for Team with ID, Year
+UIC <- get_ncaa_schedule_info(teamid = 302, year = 2019)
+
+##Run For Loop to get PBP data from baseball R web scrape and attach to dataframe <schoolname>pbp
+UICpbp <- list()
+> for (i in 1:nrow(UIC)) {
+     UICpbp[[i]] <- get_ncaa_baseball_pbp(UIC$game_info_url[i])
+ }
+
+##Organize PBP Data into another dataframe (not sure why we do this step) 
+UIC19 = plyr:: ldply(UICpbp, data.frame)
+
+##Create a new individual batter column from the description field with Stringr manipulation 
+UIC19$batter <- word(string = UIC19$description, start = 1, end = 2)
