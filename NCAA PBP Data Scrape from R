@@ -27,6 +27,8 @@ UIC19$batter <- str_squish(UIC19$batter)
 UIC19$batter <- if_else(str_detect(UIC19$description, "to p for") == 'TRUE', 'NA', UIC19$batter)
 UIC19$batter <- if_else(str_detect(UIC19$description, "\\/") == 'TRUE', 'NA', UIC19$batter)
 
-##Create action column that shows only the play by play that ocurred 
+##Create action column that shows only the play by play that ocurred with string manipulation
 UIC19$action <- str_extract(UIC19$description, "struck out swinging | flied out | homered|singled|popped out| grounded out| walked| infield fly|hit by pitch|reached on fielder's choice")
 
+## Create a new column showing where the action ocurred based on string maipulation 
+UIC19$bblocation <- str_extract(UIC19$description, "1b to | out at second | to third base |to center field |to shortstop| to right field| to first base| to second base|to left field |to 1b | to 2b | to 3b |to lf|to cf| to rf| to ss | by ss | to right center | to left center | through the right side | through the left side")
