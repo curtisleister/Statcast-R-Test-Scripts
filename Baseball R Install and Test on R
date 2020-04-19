@@ -5,6 +5,11 @@ install_github(“BillPetti/baseballr”)
 week12019 = baseballr::scrape_statcast_savant(start_date = '2019-03-28', end_date = '2019-04-07', player_type = 'batter')
 ##Combine dataframes into one dataframe with an rbind command
 SavantData = rbind(week12019, week22019, week32019, week42019…..)
+
+
+pitch_data_savant_19 = rbind(week12019, week22019, week32019, week42019, week52019, week62019, week72019, week82019, week92019, week102019, week112019, week12019, week132019, week142019, week152019, week162019, week172019, week182019, week202019, week212019, week22019, week232019, week242019)
+
+
 ##Create an observation dataframe to sample the number of rows/types of rows in the dataframe (similar to a SQL describe extended or describe statement) 
 savantobvs = savantdata[sample(nrow(savantdata),10),]
 ##Also documentation on baseball savant in a CSV file to find column descriptions
