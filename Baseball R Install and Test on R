@@ -1,5 +1,5 @@
 Library(devtools)
-Install_github(“BillPetti/baseballr”)
+install_github(“BillPetti/baseballr”)
 ##For now, make sure running R version 3.6.2 or earlier, and the newest version of RStudio. Seems to work well on PC, may need to ensure OS version is up to date on a MAC 
 ##Create dataframes for individual chunks of statcast data, duplicate the below 
 week12019 = baseballr::scrape_statcast_savant(start_date = '2019-03-28', end_date = '2019-04-07', player_type = 'batter')
